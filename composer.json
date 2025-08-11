@@ -1,0 +1,7 @@
+{
+    "require": {
+        "doctrine/orm": "^3.3",
+        "symfony/serializer": "^7.2",
+        "symfony/security-bundle": "^7.2"
+    }
+}

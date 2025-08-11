@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styles personnalisés pour MyPet */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 inline-flex items-center justify-center;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200 inline-flex items-center justify-center;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 inline-flex items-center justify-center;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+  }
+}
+
+/* Animations personnalisées */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Responsive design amélioré */
+@media (max-width: 640px) {
+  .mobile-hidden {
+    display: none;
+  }
+  
+  .mobile-full {
+    width: 100%;
+  }
+  
+  .mobile-text-center {
+    text-align: center;
+  }
+  
+  .mobile-p-4 {
+    padding: 1rem;
+  }
+  
+  .mobile-mb-4 {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tablet-hidden {
+    display: none;
+  }
+  
+  .tablet-full {
+    width: 100%;
+  }
+}
+
+/* Améliorations pour les petits écrans */
+@media (max-width: 480px) {
+  .card {
+    @apply p-3;
+  }
+  
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    @apply py-2 px-3 text-sm;
+  }
+  
+  .input-field {
+    @apply py-2 px-3 text-sm;
+  }
+}
+
+/* Améliorations pour les écrans moyens */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .card {
+    @apply p-5;
+  }
+}
+
+/* Améliorations pour les grands écrans */
+@media (min-width: 1025px) {
+  .card {
+    @apply p-6;
+  }
+} 
