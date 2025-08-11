@@ -643,7 +643,42 @@ const handleSubmit = async () => {
   loading.value = true
   
   try {
-    await emit('save', { ...form })
+    console.log('Submitting form data:', form)
+    
+    // Validation des champs requis
+    if (!form.petId) {
+      throw new Error('Veuillez sélectionner un animal')
+    }
+    
+    if (!form.date) {
+      throw new Error('Veuillez sélectionner une date')
+    }
+    
+    // Nettoyer les données avant envoi
+    const cleanData = { ...form }
+    
+    // Convertir les chaînes vides en null pour les champs texte
+    Object.keys(cleanData).forEach(key => {
+      if (typeof cleanData[key] === 'string' && cleanData[key].trim() === '') {
+        cleanData[key] = null
+      }
+      // Convertir les chaînes vides en null pour walkingTime
+      if (key === 'walkingTime' && cleanData[key] === '') {
+        cleanData[key] = null
+      }
+    })
+    
+    console.log('Cleaned form data:', cleanData)
+    
+    const result = await emit('save', cleanData)
+    console.log('Save result:', result)
+    
+    if (!result || !result.success) {
+      throw new Error(result?.error || 'Erreur lors de la sauvegarde')
+    }
+  } catch (error) {
+    console.error('Error in handleSubmit:', error)
+    // L'erreur sera gérée par le composant parent
   } finally {
     loading.value = false
   }

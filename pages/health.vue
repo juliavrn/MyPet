@@ -485,22 +485,35 @@ const closeModal = () => {
 }
 
 const saveRecord = async (recordData) => {
+  console.log('saveRecord called with:', recordData)
+  
   let result
-  if (editingRecord.value) {
-    result = await healthStore.updateRecord(editingRecord.value.id, recordData)
-  } else {
-    result = await healthStore.createRecord(recordData)
-  }
+  try {
+    if (editingRecord.value) {
+      console.log('Updating existing record:', editingRecord.value.id)
+      result = await healthStore.updateRecord(editingRecord.value.id, recordData)
+    } else {
+      console.log('Creating new record')
+      result = await healthStore.createRecord(recordData)
+    }
 
-  if (result.success) {
-    successMessage.value = editingRecord.value ? 'Enregistrement mis à jour avec succès' : 'Enregistrement créé avec succès'
-    closeModal()
-    
-    // Forcer le rafraîchissement des données pour s'assurer qu'elles apparaissent
-    await healthStore.fetchRecords()
-  } else {
-    errorMessage.value = `Erreur: ${result.error}`
-    console.error('Erreur lors de la sauvegarde:', result.error)
+    console.log('Save operation result:', result)
+
+    if (result.success) {
+      successMessage.value = editingRecord.value ? 'Enregistrement mis à jour avec succès' : 'Enregistrement créé avec succès'
+      closeModal()
+      
+      // Forcer le rafraîchissement des données pour s'assurer qu'elles apparaissent
+      console.log('Refreshing health records...')
+      await healthStore.fetchRecords()
+      console.log('Health records refreshed, count:', healthStore.records.length)
+    } else {
+      console.error('Save operation failed:', result.error)
+      errorMessage.value = `Erreur: ${result.error}`
+    }
+  } catch (error) {
+    console.error('Unexpected error in saveRecord:', error)
+    errorMessage.value = `Erreur inattendue: ${error.message || 'Erreur inconnue'}`
   }
 }
 
